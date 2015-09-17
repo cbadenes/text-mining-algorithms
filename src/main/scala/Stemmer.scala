@@ -14,24 +14,18 @@ import org.tartarus.snowball.SnowballProgram
  */
 object Stemmer {
 
-  val LUCENE_VERSION = Version.LUCENE_36;
-
-
-  val code = LanguageCode.getByLocale(LanguageCode.en.toLocale());
-
-  // snowball stemmizer
-  val snowballProgram : SnowballProgram=  Class.forName("org.tartarus.snowball.ext."+code.getName()+"Stemmer").newInstance.asInstanceOf[SnowballProgram]
-
-
   def tokenize(word: String): String ={
 
-    println(s"Token:[$word]")
+    val LUCENE_VERSION = Version.LUCENE_36;
+
+    val code = LanguageCode.getByLocale(LanguageCode.en.toLocale());
+
+    // snowball stemmizer
+    val snowballProgram : SnowballProgram=  Class.forName("org.tartarus.snowball.ext."+code.getName()+"Stemmer").newInstance.asInstanceOf[SnowballProgram]
 
     val tokenizer : TokenStream = new ClassicTokenizer(LUCENE_VERSION, new StringReader(word))
 
     val tokenStream = new SnowballFilter(tokenizer, snowballProgram)
-
-
 
     var stems = List.empty[String]
 
