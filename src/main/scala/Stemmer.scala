@@ -36,7 +36,7 @@ object Stemmer {
     // for each token
     while (tokenStream.incrementToken()) {
       // add it in the dedicated set (to keep unicity)
-      stems += token.toString()
+      stems ::= token.toString()
     }
 
     // if no analyze or 2+ stems have been found, return null
