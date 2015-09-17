@@ -25,6 +25,8 @@ object Stemmer {
 
   def tokenize(word: String): String ={
 
+    if (word.trim.isEmpty) return ""
+
     val tokenizer : TokenStream = new ClassicTokenizer(LUCENE_VERSION, new StringReader(word))
 
     val tokenStream = new SnowballFilter(tokenizer, snowballProgram)
