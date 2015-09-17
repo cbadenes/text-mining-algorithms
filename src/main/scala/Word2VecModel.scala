@@ -1,5 +1,6 @@
 import java.io.File
 
+import es.upm.oeg.stemming.lib.algorithm.SnowballStemmer
 import org.apache.commons.io.FileUtils
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.feature.Word2Vec
@@ -8,7 +9,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
  * Created by cbadenes on 10/09/15.
  */
-object Word2VecFromWikipedia {
+object Word2VecModel {
 
   def main(args: Array[String]): Unit = {
 
@@ -36,7 +37,7 @@ object Word2VecFromWikipedia {
     val input = sc.textFile(s"$path").
       map(line => line.split("\",\"")).
       filter(x=>x.size>1).filter(x=> !x(1).startsWith("REDIRECT")).
-      map(x=>x(1).split(" ").toSeq)
+      map(x=>x(1).split(" ").map(Stemmer.tokenize(_)).filter(_.trim.nonEmpty).toSeq)
 
     val word2vec = new Word2Vec()
 

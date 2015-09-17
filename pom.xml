@@ -27,6 +27,7 @@
         <scala.version>2.11.2</scala.version>
         <scalatest.version>2.2.4</scalatest.version>
         <spark.version>1.5.0</spark.version>
+        <stemmer.version>1.0.0</stemmer.version>
     </properties>
 
     <build>
@@ -167,6 +168,22 @@
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
         </dependency>
+        <!-- Stemmer -->
+        <dependency>
+            <groupId>es.upm.oeg</groupId>
+            <artifactId>oeg-stemming-lib</artifactId>
+            <version>${stemmer.version}</version>
+        </dependency>
     </dependencies>
-
+    <repositories>
+        <!-- GitHub Stemmer Repository -->
+        <repository>
+            <id>oeg-stemming-mvn-repo</id>
+            <url>https://raw.github.com/cbadenes/oeg-stemming/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
