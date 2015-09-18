@@ -1,6 +1,5 @@
 import java.io.File
 
-import es.upm.oeg.stemming.lib.algorithm.SnowballStemmer
 import org.apache.commons.io.FileUtils
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.feature.Word2Vec
@@ -40,6 +39,15 @@ object Word2VecModel {
       map(x=>x(1).split(" ").map(Stemmer.tokenize(_)).filter(_.trim.nonEmpty).toSeq)
 
     val word2vec = new Word2Vec()
+    word2vec.
+      setVectorSize(100).
+      setSeed(42L).
+      setNumIterations(5).
+      setNumPartitions(36).
+      setMinCount(5)
+
+
+    Logger.getLogger("Word2VecModel").warn("Building the model..")
 
     val model = word2vec.fit(input)
 
