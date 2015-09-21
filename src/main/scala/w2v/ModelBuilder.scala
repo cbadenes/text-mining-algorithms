@@ -1,14 +1,17 @@
+package w2v
+
 import java.io.File
 
 import org.apache.commons.io.FileUtils
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.feature.Word2Vec
 import org.apache.spark.{SparkConf, SparkContext}
+import text.Stemmer
 
 /**
  * Created by cbadenes on 10/09/15.
  */
-object Word2VecModel {
+object ModelBuilder {
 
   def main(args: Array[String]): Unit = {
 
@@ -36,7 +39,13 @@ object Word2VecModel {
     val input = sc.textFile(s"$path").
       map(line => line.split("\",\"")).
       filter(x=>x.size>1).filter(x=> !x(1).startsWith("REDIRECT")).
-      map(x=>x(1).split(" ").map(Stemmer.tokenize(_)).filter(_.trim.nonEmpty).toSeq)
+      map(x=>x(1).split(" ").map(Stemmer.tokenize(_)).filter(_.trim.nonEmpty)).cache
+      //map(x=>x(1).split(" ").map(Stemmer.tokenize(_)).filter(_.trim.nonEmpty).toSeq)
+
+
+    val vocabulary = input.flatMap(x=>x).map(x=>(x,1)).reduceByKey((x,y)=>x+y).filter(x=>x._2>10).map(x=>x._1).collect.toList
+
+    val text = input.map(x=>x.filter(y=>vocabulary.contains(y)).toSeq)
 
     val word2vec = new Word2Vec()
     word2vec.
@@ -49,7 +58,7 @@ object Word2VecModel {
 
     Logger.getLogger("Word2VecModel").warn("Building the model..")
 
-    val model = word2vec.fit(input)
+    val model = word2vec.fit(text)
 
 
     // Create 'topics_words.csv' file

@@ -1,3 +1,5 @@
+package text
+
 import java.io.StringReader
 
 import com.neovisionaries.i18n.LanguageCode
