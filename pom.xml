@@ -273,6 +273,19 @@
 
     </dependencies>
 
+    <repositories>
+        <!-- External Repository -->
+        <repository>
+            <id>external-libs</id>
+            <url>https://raw.github.com/epnoi/external-libs/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
     <distributionManagement>
         <repository>
             <id>internal.repo</id>

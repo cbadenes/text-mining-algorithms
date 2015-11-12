@@ -1,5 +1,5 @@
 
-Implementation of some Text Mining Algorithms [![Build Status](https://travis-ci.org/cbadenes/text-mining-algorithms.svg)](https://travis-ci.org/cbadenes/text-mining-algorithms)
+[![Build Status](https://travis-ci.org/cbadenes/text-mining-algorithms.svg)](https://travis-ci.org/cbadenes/text-mining-algorithms) Implementation of some Text Mining Algorithms 
 
 ### Maven Repository
 
